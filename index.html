@@ -81,6 +81,14 @@
         border: 0;
       }
 
+      .tiktok-wrap {
+        padding: 12px;
+      }
+
+      .tiktok-embed {
+        margin: 0 auto !important;
+      }
+
       .title {
         padding: 14px 16px 18px;
         font-size: 15px;
@@ -97,8 +105,8 @@
   <body>
     <main class="page">
       <header>
-        <h1>Galeria de Videos</h1>
-        <p class="subtitle">Una galeria limpia y moderna con videos de YouTube.</p>
+        <h1>Galeria de Bienestar y Cuidado</h1>
+        <p class="subtitle">Consejos practicos sobre dolor cervical, respiracion y postura.</p>
       </header>
 
       <section class="grid" id="video-grid">
@@ -118,6 +126,30 @@
             </div>
             <div class="title">Titulo del video</div>
           </article>
+
+          Para TikTok (reemplaza el ID y el link):
+
+          <article class="card">
+            <div class="tiktok-wrap">
+              <blockquote
+                class="tiktok-embed"
+                cite="https://www.tiktok.com/@usuario/video/ID_NUMERICO"
+                data-video-id="ID_NUMERICO"
+                style="max-width: 605px; min-width: 280px"
+              >
+                <section>
+                  <a
+                    href="https://www.tiktok.com/@usuario/video/ID_NUMERICO"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Ver video en TikTok
+                  </a>
+                </section>
+              </blockquote>
+            </div>
+            <div class="title">Titulo del video</div>
+          </article>
         -->
       </section>
     </main>
@@ -126,16 +158,45 @@
       // OPCION 2 (RECOMENDADA): Agrega videos aqui y se renderizan automaticamente.
       // Solo agrega nuevos objetos al arreglo "videos".
       const videos = [
-        { id: "dQw4w9WgXcQ", title: "Video de ejemplo 1" },
-        { id: "M7lc1UVf-VE", title: "Video de ejemplo 2" },
-        { id: "aqz-KE-bpKQ", title: "Video de ejemplo 3" },
+        { type: "youtube", id: "iA_8q5PWAp0", title: "Manejo del dolor cervical" },
+        { type: "youtube", id: "BQmDZ23tEfQ", title: "Respiracion diafragmatica" },
+        { type: "youtube", id: "Be8ctBEHE3o", title: "Compresas frias o calientes" },
+        { type: "youtube", id: "ygcmGps4V2U", title: "Higiene postural" },
+        {
+          type: "tiktok",
+          id: "7556755202179747128",
+          url: "https://www.tiktok.com/@fisiosaracardona/video/7556755202179747128",
+          title: "Fortalecimiento de hombro",
+        },
       ];
 
       const grid = document.getElementById("video-grid");
 
       const cards = videos
-        .map(
-          (video) => `
+        .map((video) => {
+          if (video.type === "tiktok") {
+            return `
+              <article class="card">
+                <div class="tiktok-wrap">
+                  <blockquote
+                    class="tiktok-embed"
+                    cite="${video.url}"
+                    data-video-id="${video.id}"
+                    style="max-width: 605px; min-width: 280px"
+                  >
+                    <section>
+                      <a href="${video.url}" target="_blank" rel="noreferrer">
+                        Ver video en TikTok
+                      </a>
+                    </section>
+                  </blockquote>
+                </div>
+                <div class="title">${video.title}</div>
+              </article>
+            `;
+          }
+
+          return `
             <article class="card">
               <div class="video-wrap">
                 <iframe
@@ -148,11 +209,12 @@
               </div>
               <div class="title">${video.title}</div>
             </article>
-          `
-        )
+          `;
+        })
         .join("");
 
       grid.innerHTML = cards;
     </script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
   </body>
 </html>
