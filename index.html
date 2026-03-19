@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Galeria moderna y responsive de videos de YouTube." />
+    <title>Galeria de Videos de YouTube</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --text: #1c1f24;
+        --muted: #5b6270;
+        --shadow: 0 10px 30px rgba(18, 24, 38, 0.08);
+        --radius: 16px;
+        --gap: 20px;
+        --max-width: 1100px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      .page {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 40px 20px 56px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(24px, 3vw, 36px);
+        letter-spacing: -0.02em;
+      }
+
+      p.subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: var(--gap);
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .video-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #e9ecf3;
+      }
+
+      .video-wrap iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .title {
+        padding: 14px 16px 18px;
+        font-size: 15px;
+        color: var(--text);
+      }
+
+      @media (max-width: 480px) {
+        .page {
+          padding: 32px 16px 44px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <h1>Galeria de Videos</h1>
+        <p class="subtitle">Una galeria limpia y moderna con videos de YouTube.</p>
+      </header>
+
+      <section class="grid" id="video-grid">
+        <!--
+          OPCION 1: Agregar videos manualmente
+          Copia un bloque .card y cambia el VIDEO_ID y el titulo.
+
+          <article class="card">
+            <div class="video-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="Titulo del video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="title">Titulo del video</div>
+          </article>
+        -->
+      </section>
+    </main>
+
+    <script>
+      // OPCION 2 (RECOMENDADA): Agrega videos aqui y se renderizan automaticamente.
+      // Solo agrega nuevos objetos al arreglo "videos".
+      const videos = [
+        { id: "dQw4w9WgXcQ", title: "Video de ejemplo 1" },
+        { id: "M7lc1UVf-VE", title: "Video de ejemplo 2" },
+        { id: "aqz-KE-bpKQ", title: "Video de ejemplo 3" },
+      ];
+
+      const grid = document.getElementById("video-grid");
+
+      const cards = videos
+        .map(
+          (video) => `
+            <article class="card">
+              <div class="video-wrap">
+                <iframe
+                  src="https://www.youtube.com/embed/${video.id}"
+                  title="${video.title}"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="title">${video.title}</div>
+            </article>
+          `
+        )
+        .join("");
+
+      grid.innerHTML = cards;
+    </script>
+  </body>
+</html>
